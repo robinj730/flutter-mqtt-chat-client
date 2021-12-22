@@ -22,7 +22,7 @@ import 'package:open_file/open_file.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_mqtt/ui/extensions/UiMessages.dart';
-import 'package:place_picker/place_picker.dart';
+// import 'package:place_picker/place_picker.dart';
 
 class ChatUIDBPage extends StatefulWidget {
   final ContactChat contactChat;
@@ -132,17 +132,22 @@ class _ChatUIPageState extends State<ChatUIDBPage> {
           room: widget.contactChat.roomId);
     }
   }
+
   void _handleLocationSelection() async {
-    LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            PlacePicker("AIzaSyDs9qcIhAV-aToQiGOIRlVTzFtrbh1z7tU",
-            )));
+    // LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (context) =>
+    //         PlacePicker("AIzaSyDs9qcIhAV-aToQiGOIRlVTzFtrbh1z7tU",
+    //         )));
 
     // Handle the result in your way
-    if(result != null && result.latLng != null){
-      ChatApp.instance()!.messageSender.sendLocationMessage(result.latLng!.longitude, result.latLng!.latitude, result.formattedAddress, widget.contactChat.roomId);
-    }
-    print(result);
+    // if (result != null && result.latLng != null) {
+    //   ChatApp.instance()!.messageSender.sendLocationMessage(
+    //       result.latLng!.longitude,
+    //       result.latLng!.latitude,
+    //       result.formattedAddress,
+    //       widget.contactChat.roomId);
+    // }
+    // print(result);
   }
 
   void _handleImageSelection() async {
@@ -172,16 +177,16 @@ class _ChatUIPageState extends State<ChatUIDBPage> {
                 )),
       );
     } else if (message is types.ImageMessage) {
-      if(message.metadata != null && message.metadata!["type"] == "ChatLocation"){
+      if (message.metadata != null &&
+          message.metadata!["type"] == "ChatLocation") {
         //location message
-        MapsLauncher.launchCoordinates((message.metadata!["latitude"])!, (message.metadata!["longitude"])!, message.metadata!["text"]);
-      }
-      else {
+        MapsLauncher.launchCoordinates((message.metadata!["latitude"])!,
+            (message.metadata!["longitude"])!, message.metadata!["text"]);
+      } else {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  MediaViewerPage(
+              builder: (context) => MediaViewerPage(
                     roomId: widget.contactChat.roomId,
                     messageId: message.id,
                   )),
@@ -258,7 +263,12 @@ class _ChatUIPageState extends State<ChatUIDBPage> {
                   padding: const EdgeInsets.only(right: 10),
                   child: Hero(
                     tag: "avatar_" + widget.contactChat.id,
-                    child: ContactAvatar(chat: widget.contactChat, radius: 15, borderWidth: 1,borderColor: Colors.grey),//fixme: use color for presence
+                    child: ContactAvatar(
+                        chat: widget.contactChat,
+                        radius: 15,
+                        borderWidth: 1,
+                        borderColor:
+                            Colors.grey), //fixme: use color for presence
                   ),
                 ),
                 Column(
