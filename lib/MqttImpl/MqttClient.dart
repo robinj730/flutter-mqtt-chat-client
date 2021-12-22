@@ -30,10 +30,12 @@ class MqttClient extends ClientHandler {
       int? port}) async {
     String cid = clientId ?? getClientId()!;
     _clientId = cid;
-    _client = MqttServerClient.withPort(host, cid, port ?? 1883);
+    _client = MqttServerClient.withPort(host, cid, port ?? 8083);
     // _client = MqttServerClient.withPort('broker.emqx.io', resource, 1883
+    _client!.useWebSocket = true;
+    _client!.websocketProtocols = MqttClientConstants.protocolsSingleDefault;
 
-    _client!.logging(on: true);
+    // _client!.logging(on: true);
 
     _client!.onConnected = onConnected;
     _client!.onDisconnected = onDisconnected;

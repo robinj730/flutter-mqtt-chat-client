@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   initState() {
+    AppPreferences.setHost('ws://121.89.241.3/mqtt');
     AppPreferences.brokerHost().then((host) {
       _hostController.text = host ?? "";
     });
@@ -41,10 +42,10 @@ class _LoginPageState extends State<LoginPage> {
                   flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromRGBO(143, 148, 251, 50),
-                Color.fromRGBO(143, 148, 251, .6),
-              ])),
+                        gradient: LinearGradient(colors: [
+                      Color.fromRGBO(143, 148, 251, 50),
+                      Color.fromRGBO(143, 148, 251, .6),
+                    ])),
                     //color: Theme.of(context).primaryColor,
                     child: Center(
                         child: Text("Flutter MQTT Chat Client",
@@ -99,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                                   controller: _usernameController,
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "Email",
+                                      hintText: "Username",
                                       hintStyle:
                                           TextStyle(color: Colors.grey[400])),
                                 ),
